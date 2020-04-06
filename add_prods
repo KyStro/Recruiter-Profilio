@@ -1,0 +1,42 @@
+#!/usr/bin/python3
+import cgi
+import cgitb
+import MySQLdb
+import passwords
+cgitb.enable()
+
+
+
+
+print("Status: 200 OK")
+print('Content-Type: text/html\n\n')
+print()
+print()
+
+
+conn = MySQLdb.connect(host = passwords.SQL_HOST,
+user = passwords.SQL_USER,
+passwd = passwords.SQL_PASSWD,
+db = "mydb")
+
+cursor = conn.cursor()
+
+form = cgi.FieldStorage()
+d = {}
+for key in form:
+    d[key]=form[key].value
+
+cursor.execute('insert into products (name, price, description) values ("{}","{}","{}");'.format(d['name'], d['price'],d['desc']))
+
+cursor.close()
+conn.commit()
+conn.close()
+
+print('''<html>
+    <h3>Your response has been recorded. Hit "Home" to return to homepage.</h3>
+    <br>
+    <a href='/'>Home</a>
+
+
+
+        </html>''')

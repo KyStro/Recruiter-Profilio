@@ -1,0 +1,57 @@
+#!/usr/bin/python3
+import cgi
+import cgitb
+import MySQLdb
+import passwords
+cgitb.enable()
+
+
+
+
+print("Status: 200 OK")
+print('Content-Type: text/html\n\n')
+print()
+print()
+
+
+conn = MySQLdb.connect(host = passwords.SQL_HOST,
+user = passwords.SQL_USER,
+passwd = passwords.SQL_PASSWD,
+db = "mydb")
+
+cursor = conn.cursor()
+
+form = cgi.FieldStorage()
+d = {}
+for key in form:
+    d[key]=form[key].value
+
+
+output = ''
+cursor.execute('select product_id from products;')
+vals=[]
+for tup in cursor.fetchall():
+    vals.append(str(tup[0]))
+
+cursor.close()
+
+
+if str(d['pid']) in vals:
+    cursor = conn.cursor()
+    cursor.execute('insert into orders (product_id, date, cust_fname, cust_lname) values ("{}","{}","{}","{}");'.format(d['pid'], d['date'],d['fname'],d['lname']))
+
+    cursor.close()
+    conn.commit()
+    conn.close()
+    output += 'Your response has been recorded. Hit "Home" to return to homepage.'
+
+else:
+    output += 'Not a valid product number, please refer to the product table.'
+
+
+print('''<html>''' + output + '''<br>
+    <a href='/'>Home</a>
+
+
+
+        </html>''')
