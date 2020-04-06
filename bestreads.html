@@ -1,0 +1,64 @@
+<!-- Kyle Strokes -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="bestreads.css" />
+<title>Best Reads</title>
+</head>
+<body onload="showAll()">
+
+<div id="header">
+<div>
+	<span>bestreads</span>
+</div>
+<span id="back" onclick="showAll()">home</span>
+</div>
+
+<div id="allImages"></div>
+
+
+<script>
+all = document.getElementById('allImages');
+
+function getInfo(book) {
+	console.log(book)
+	book_path = book.id
+	console.log(book_path)
+	ajax = new XMLHttpRequest();
+	ajax.open('GET', 'bestreads.php?command=showone&book='+book_path);
+	ajax.send();
+	ajax.onreadystatechange = function (){
+		if(ajax.readyState == 4 && ajax.status == 200){
+			html = JSON.parse(ajax.responseText)
+			all.innerHTML = html
+		}
+	}
+
+}
+
+function showAll() {
+	ajax = new XMLHttpRequest();
+	ajax.open('GET', 'bestreads.php?command=showall');
+	ajax.send();
+	ajax.onreadystatechange = function (){
+		if(ajax.readyState == 4 && ajax.status == 200){
+			array = JSON.parse(ajax.responseText)
+			imgs = ''
+			for(i=0; i<array.length; i++){
+				img = '<img class="onebook" src="' + array[i] + '/cover.jpg"' + ' onclick="getInfo(this)" id="'+array[i]+'">'
+				imgs += img
+			}
+
+			all.innerHTML = imgs
+		}
+	}; 
+
+}
+
+
+</script>
+
+</body>
+</html>
