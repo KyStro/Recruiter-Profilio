@@ -1,0 +1,150 @@
+#!/usr/bin/python3
+import cgi
+import cgitb
+import MySQLdb
+import passwords
+import os
+import json
+import sys
+cgitb.enable()
+
+
+
+
+conn = MySQLdb.connect(host = passwords.SQL_HOST,
+user = passwords.SQL_USER,
+passwd = passwords.SQL_PASSWD,
+db = "vet")
+cursor = conn.cursor()
+'''
+print("Status: 200 OK")
+print("Content-Type: application/json")
+print()
+'''
+def make_json(head, tup):
+    d = {}
+    for i in range(len(head)):
+        d[head[i]] = tup[i]
+    return d
+
+def post_pets(cursor):
+    input_data = sys.stdin.read()
+    d = json.loads(input_data)
+    if 'id' in d.keys():
+        del d['id']
+    keys = set(d.keys())
+    fields = set(['name','breed','owner'])
+    omitted = fields - keys
+    for key in omitted:
+        d[key]='N/A'
+    try:
+        cursor.execute('''insert into pets (name, breed, owner) values
+        ('{}','{}','{}');'''.format(d['name'], d['breed'], d['owner']))
+        cursor.close()
+        conn.commit()
+        conn.close()
+        print("Status: 302 Redirect")
+        print("Location: http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/pets/")
+        print()
+    except:
+        print("Status: 200 OK")
+        print("Content-Type: text/html")
+        print()
+        raise
+
+
+def get_pets(cursor):
+    cursor.execute('select * from pets;')
+    lis = []
+    field_names = [i[0] for i in cursor.description]
+    for row in cursor.fetchall():
+        j = make_json(field_names, row)
+        idd = str(j['id'])
+        owner = str(j['owner'])
+        del j['owner']
+        j['link'] = 'http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/pets/'+idd
+        j['owner_link'] = 'http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/people/'+owner
+        lis.append(j)
+    print("Status: 200 OK")
+    print("Content-Type: application/json")
+    print()
+    print(json.dumps(lis, indent=2))
+    cursor.close()
+    conn.commit()
+    conn.close()
+
+
+def get_pet(cursor, path):
+    cursor.execute('select * from pets where id={};'.format(path))
+    field_names = [i[0] for i in cursor.description]
+    for row in cursor.fetchall():
+        j = make_json(field_names, row)
+        idd = str(j['id'])
+        owner = str(j['owner'])
+        del j['owner']
+        j['link'] = 'http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/pets/'+idd
+        j['owner_link'] = 'http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/people/'+owner
+        print("Status: 200 OK")
+        print("Content-Type: application/json")
+        print()
+        print(json.dumps(j, indent=1))
+    cursor.close()
+    conn.commit()
+    conn.close()
+
+
+def put_pet(cursor, path):
+    input_data = sys.stdin.read()
+    d = json.loads(input_data)
+    conditions = ''
+    if 'id' in d.keys():
+        del d['id']
+    if 'breed' in d.keys():
+        del d['breed']
+    for key in d.keys():
+        conditions += '{}="{}",'.format(key,d[key])
+    conditions = conditions[:-1]
+    try:
+        if conditions != '':
+            cursor.execute('update pets set {} where id={}'.format(conditions, path))
+        
+        cursor.close()
+        conn.commit()
+        conn.close()
+        print("Status: 302 Redirect")
+        print("Location: http://ec2-54-162-228-22.compute-1.amazonaws.com/cgi-bin/pets/")
+        print()
+    except:
+        print("Status: 200 OK")
+        print("Content-Type: text/html")
+        print()
+        raise
+
+
+request = os.environ["REQUEST_METHOD"]
+
+if "PATH_INFO" in os.environ and os.environ["PATH_INFO"] != '/':
+    #specific pet
+    path = os.environ["PATH_INFO"].strip('/')
+    if request == "GET":
+        get_pet(cursor, path)
+    elif request == "PUT":
+        put_pet(cursor, path)
+    else:
+        print('Status: 405 Method Not Allowed')
+        print("Content-Type: text/html")
+        print()
+else:
+    #pets
+    path = '/'
+    if request == "GET":
+        get_pets(cursor)
+    elif request == "POST":
+        post_pets(cursor)
+    else:
+        print('Status: 405 Method Not Allowed')
+        print("Content-Type: text/html")
+        print()
+
+
+
