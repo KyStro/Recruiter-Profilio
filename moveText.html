@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<input type='text' id='left'>
+<button type='button' id='aButton'>>> Move left to right >></button>
+<input type='text' id='right'>
+
+<script>
+
+mttr = document.getElementById('aButton');
+left = document.getElementById('left');
+right = document.getElementById('right');
+mttr.addEventListener('click', move);
+
+function move(){
+	text = left.value;
+	left.value = '';
+	right.value = text;
+}
+
+
+</script>
+
+</body>
+</html>

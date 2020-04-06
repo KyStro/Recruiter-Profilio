@@ -1,0 +1,34 @@
+@CHARSET "UTF-8";
+
+header {
+	background-color: blue;
+	color: white;
+	text-align: center;
+	padding: 5px;
+	font-size: 20px;
+}
+
+.menu {
+	background-color: lightgray;
+	height: 354px;
+	width: 130px;
+	padding: 5px;
+	float: left;
+}
+
+button {
+	margin: 5px;
+}
+
+
+.redpink {
+	background-color: pink;
+	border: solid;
+	border-color: red;
+	width: 120px;
+	height: 20px;
+	text-align: center;
+}
+
+
+

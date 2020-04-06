@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<br>
+Enter a number: <input id=enter type="number">
+<br><br>
+<div id=ans></div>
+
+
+<script>
+inp = document.getElementById('enter')
+inp.addEventListener('change', add)
+arr = []
+sum = 0
+
+function add(){
+	sum += Number(inp.value)
+	arr.push(inp.value)
+	inp.value = ''
+	ans.innerHTML = 'sum of [' + arr.toString() + '] = ' + sum.toString()
+}
+</script>
+</body>
+</html>

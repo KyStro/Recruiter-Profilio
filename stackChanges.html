@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<br>
+Push <input id=input> <button id=but onclick='pop()'>Pop</button>
+<div id=stack></div>
+<script>
+
+entered = document.getElementById('input')
+stak = document.getElementById('stack')
+entered.addEventListener('change', add)
+arr = []
+
+function add(){
+	arr.unshift(entered.value)
+	entered.value = ''
+	stak.innerHTML = format(arr)
+}
+
+function pop(){
+	arr.shift()
+	stak.innerHTML = format(arr)
+}
+
+function format(arr){
+	s = '<ul>'
+	for(i=0; i<arr.length; i++){
+		s += '<li>'+ arr[i] + '</li>'
+	}
+	s += '</ul>'
+	return s
+}
+
+</script>
+</body>
+</html>

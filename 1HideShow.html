@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Rick Mercer -->
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Hide / Show</title>
+</head>
+<body>
+
+<button id="hsButton" type="button" onclick="hideShow()">Hide</button>
+<div id="hideShow">
+<br /> TBA: This text will appear and disappear.
+</div>
+
+<script>
+
+showbutton = document.getElementById('hsButton');
+text = document.getElementById('hideShow')
+
+
+function hideShow(){
+	showbutton.innerHTML = 'Show';
+	text.innerHTML = '';
+	showbutton.setAttribute('onClick', 'nowShow()');
+}
+
+function nowShow(){
+	showbutton.innerHTML = 'Hide'
+	text.innerHTML = '<br /> TBA: This text will appear and disappear.'
+	showbutton.setAttribute('onClick', 'hideShow()');
+}
+
+</script>
+
+</body>
+</html>

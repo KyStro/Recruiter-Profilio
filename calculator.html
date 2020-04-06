@@ -1,0 +1,45 @@
+<!-- Kyle Strokes-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>An Eventful Calculator</title>
+</head>
+<body>
+<h3>Calculator</h3>
+x&nbsp<input id='x'>
+<br>
+y&nbsp<input id='y'>
+<br>
+<button id='button'>Show results</button>
+<div id='output'></div>
+
+<script>
+
+var x = document.getElementById('x');
+var y = document.getElementById('y');
+var button = document.getElementById("button");
+var output = document.getElementById("output");
+
+button.addEventListener('click', function eventHandler (){
+	
+	var message = '<br>';
+	var sum = Number(x.value)+Number(y.value);
+	var sub = Number(x.value)-Number(y.value);
+	var prod = Number(x.value)*Number(y.value);
+	var div = Number(x.value)/Number(y.value);
+	var remain = Number(x.value)%Number(y.value);
+	
+	message += x.value + ' + ' + y.value + ' = ' + sum + '<br>'
+	message += x.value + ' - ' + y.value + ' = ' + sub + '<br>'
+	message += x.value + ' * ' + y.value + ' = ' + prod + '<br>'
+	message += x.value + ' / ' + y.value + ' = ' + div + '<br>'
+	message += x.value + ' % ' + y.value + ' = ' + remain + '<br>'
+	
+	output.innerHTML = message;
+});
+
+
+</script>
+</body>
+</html>

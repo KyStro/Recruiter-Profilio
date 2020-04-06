@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Event Driven JS</title>
+<link href="styles.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
+
+<header> Using Javascript to Change the HTML </header> 
+
+<div>
+<div class='menu'>
+<button type="button" onclick="setFrameTo(0)"> 0) Caclculator </button>
+<button type="button" onclick="setFrameTo(1)"> 1) Hide / Show </button>
+<button type="button" onclick="setFrameTo(2)"> 2) Change 7 Styles </button>
+<button type="button" onclick="setFrameTo(3)"> 3) Move Text </button>
+<button type="button" onclick="setFrameTo(4)"> 4) Add to Array </button>
+<button type="button" onclick="setFrameTo(5)"> 5) Over Out </button>
+<button type="button" onclick="setFrameTo(6)"> 6) Growing Image </button>
+<button type="button" onclick="setFrameTo(7)"> 7) Pixel Increase </button>
+<button type="button" onclick="setFrameTo(8)"> 8) Running Sum </button>
+<button type="button" onclick="setFrameTo(9)"> 9) Stack Changes </button>
+
+
+</div>
+
+
+<!-- Set the src of the default html page -->
+<iframe id="section" src="intro.html" width="600px" height="360px" frameBorder="0"></iframe>
+</div>
+
+
+<header>Kyle Strokes</header>
+
+<script>
+var page = [];
+page[0] = 'calculator.html'
+page[1] = "1HideShow.html"
+page[2] = '2Change7Styles.html'
+page[3] = 'moveText.html'
+page[4] = '4AddToArray.html'
+page[5] = 'overOut.html'
+page[6] = 'growingImage.html'
+page[7] = 'incrBy1px.html'
+page[8] = 'runSum.html'
+page[9] = 'stackChanges.html'
+//add html pages
+function setFrameTo(number) {
+    // Get a reference to the iframe sp we can change src
+	var frame = document.getElementById("section");
+	frame.src = page[number];
+}
+</script>
+</body>
+</html>

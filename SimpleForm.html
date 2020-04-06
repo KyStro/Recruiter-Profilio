@@ -1,0 +1,64 @@
+<!-- Kyle Strokes  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Simple Form</title>
+</head>
+<body>
+<b>Insides</b><br>
+<form onsubmit='post();return false'>
+
+<select>
+	<option id='1' value='Veggie'>Veggie</option>
+	<option id='2' value='Turkey'>Turkey</option>
+	<option id='3' value='Tuna'>Tuna</option>
+	
+</select>
+<br><br>
+<b>Bread</b><br>
+<select>
+	<option id='4' value='Submarine Roll'>Submarine Roll</option>
+	<option id='5' value='Wheat'>Wheat</option>
+	<option id='6' value='Rye'>Rye</option>
+
+	
+</select>
+
+<br><br>
+<input type='submit' onsubmit='post();return false'>
+<div id='order'></div>
+
+</form>
+<script>
+veg = document.getElementById('1')
+turk = document.getElementById('2')
+tuna = document.getElementById('3')
+sub = document.getElementById('4')
+wheat = document.getElementById('5')
+rye = document.getElementById('6')
+order = document.getElementById('order')
+
+items = []
+function post () {
+	if(veg.selected){
+		items.push(veg.value)
+	}
+	if(turk.selected){
+		items.push(turk.value)
+	}if(tuna.selected){
+		items.push(tuna.value)
+	}if(sub.selected){
+		items.push(sub.value)
+	}if(wheat.selected){
+		items.push(wheat.value)
+	}if(rye.selected){
+		items.push(rye.value)
+	}
+	order.innerHTML = '<b><br><hr><br>You ordered '+items[0]+' on '+items[1]+'</b>'
+}
+</script>
+
+</body>
+</html>

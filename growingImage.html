@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+
+<body>
+<p>Click the image to see it grow.</p>
+<img alt="cat" src="cat.jpeg" height=100px width=120px id='cat'>
+
+<script>
+image = document.getElementById('cat')
+
+image.addEventListener('click', incr)
+
+function incr(){
+	image.height += 10
+	image.width += 15
+}
+</script>
+</body>
+</html>

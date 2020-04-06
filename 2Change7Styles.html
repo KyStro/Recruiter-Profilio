@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="styles.css" type="text/css" rel="stylesheet" />
+
+</head>
+<body>
+<div id=newhead></div>
+<div id=newtext></div>
+
+<div id='replace'></div>
+<div id='vanillaText'><h3>Click this text</h3><hr></div>
+<div id='divide'>Click "Click this text to change the div in several ways</div>
+
+<script>
+text = document.getElementById('vanillaText')
+text.addEventListener('click', change)
+
+function change() {
+	text.style.fontSize = '34px';
+	text.style.padding = '10px';
+	text.style.background = 'green';
+	text.style.border = 'solid';
+	text.style.width = '300px';
+	text.style.height = '100px';
+	text.style.float = 'right';
+	text.innerHTML = 'Looking good! ;)';
+	text.style.color = 'yellow';
+	text.style.borderColor = 'red';
+	document.getElementById('divide').innerHTML = ''
+	document.getElementById('newhead').innerHTML = '<h3>Click this text</h3><hr><br>'
+	
+}
+</script>
+
+</body>
+</html>
