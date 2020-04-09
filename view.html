@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Actor/Roles/Movies</title>
+<style>
+tr:nth-child(odd) { background: lightgray } 
+table, td{
+  border: 1px solid black;
+  border-collapse: collapse;
+  padding: 5px;
+}
+</style>
+</head>
+<body>
+<b>Search for actors, roles, movies in the database imdb_small</b><br><br><br>
+Search string<br>
+<input id='in' name='in'></input><br><br>
+<button id='actors' type='submit' onclick='search(this)'>Actors</button>
+<button id='movies' type='submit' onclick='search(this)'>Movies</button>
+<button id='roles' type='submit' onclick='search(this)'>Roles</button>
+
+<br><br>
+<div id='output'></div>
+
+
+<script>
+function search(what){
+	var ajax = new XMLHttpRequest();
+	term = document.getElementById('in').value
+	table = what.id
+
+	
+ 	ajax.open('GET', 'controller.php?term='+term+'&table='+table)
+	ajax.send()
+	
+	ajax.onreadystatechange = function() {
+
+		if (ajax.readyState == 4 && ajax.status == 200){
+			html = JSON.parse(ajax.responseText)
+			document.getElementById('output').innerHTML = html
+		}
+		
+	}
+}
+	
+
+
+</script>
+</body>
+</html>
